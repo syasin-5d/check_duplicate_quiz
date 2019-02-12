@@ -52,7 +52,7 @@ def flatten(nested_list):
 
 """
 問題文から名詞のみを取り出し、リストに追加する。
-リストのindexと問題のindexが対応している
+リストのindexと問題のindexが対応していない（4つずれてる）
 """
 def get_bag_of_words(df):
     bag_of_words = list()
@@ -81,6 +81,8 @@ def get_duplicated_words(vocab_df):
     for column, value in vocab_df.sum(axis=0).items():
         if value > 1:
             question_number = list(vocab_df.loc[vocab_df[column] > 0, :].index)
+            # 問題番号のずれを修正
+            question_number = map(lambda x: x+4, question_number)
             duplicated_words[column] = (question_number)
     return duplicated_words
 
